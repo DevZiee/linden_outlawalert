@@ -25,17 +25,14 @@ Open mdt/sv_mdt.lua and locate RegisterServerEvent("mdt:newCall"), replace with:
 RegisterServerEvent("mdt:newCall")
 AddEventHandler("mdt:newCall", function(details, caller, coords, sendNotification)
   call_index = call_index + 1
-  local xPlayers = ESX.GetPlayers()
+  local xPlayers = ESX.GetExtendedPlayers('job', 'police')
   for i= 1, #xPlayers do
-  	local source = xPlayers[i]
-  	local xPlayer = ESX.GetPlayerFromId(source)
-  	if xPlayer.job.name == 'police' then
-		if sendNotification ~= false then
-			TriggerClientEvent("InteractSound_CL:PlayOnOne", source, 'demo', 1.0)
-			TriggerClientEvent("mythic_notify:client:SendAlert", source, {type="inform", text="You have received a new call.", 5000, style = { ['background-color'] = '#ffffff', ['color'] = '#000000' }})
-		end
-  		TriggerClientEvent("mdt:newCall", source, details, caller, coords, call_index)
-  	end
+  	local source = xPlayers[i].source
+    if sendNotification ~= false then
+      TriggerClientEvent("InteractSound_CL:PlayOnOne", source, 'demo', 1.0)
+      TriggerClientEvent("mythic_notify:client:SendAlert", source, {type="inform", text="You have received a new call.", 5000, style = { ['background-color'] = '#ffffff', ['color'] = '#000000' }})
+    end
+    TriggerClientEvent("mdt:newCall", source, details, caller, coords, call_index)
   end
 end)
 ```  

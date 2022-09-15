@@ -3,23 +3,26 @@ game 'gta5'
 
 version '2.7.1'
 description 'https://github.com/thelindat/linden_outlawalert'
-versioncheck 'https://raw.githubusercontent.com/thelindat/linden_outlawalert/master/fxmanifest.lua'
 
 client_scripts {
     '@es_extended/locale.lua',
     'locales/en.lua',
     'locales/fr.lua',
-    'client/esx.lua',
+    'shared/cl_notify.lua',
     'client/main.lua',
 }
 
-shared_script 'config.lua'
+shared_scripts{
+    '@es_extended/imports.lua',
+    'config.lua'
+}
 
 server_scripts {
     '@es_extended/locale.lua',
-    '@mysql-async/lib/MySQL.lua',
+    '@oxmysql/lib/MySQL.lua',
     'locales/en.lua',
     'locales/fr.lua',
+    'shared/sv_notify.lua',
     'server.lua',
 }
 

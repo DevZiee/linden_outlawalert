@@ -1,11 +1,16 @@
 Config = {}
+
+-- Notification Type -- 
+-- Note: If you want to edit --> shared/cl_notify.lua and shared/sv_notify.lua
+Config.NotificationType = { -- ['mythic_notify_default', 'mythic_notify_old', 'ox_lib', 't-notify', 'col_notify', 'Roda_Notifications' 'esx_notify', 'default-esx', 'col_notify_new', 'okokNotify', 'custom']
+    client = 'col_notify_new',
+    server = 'col_notify_new'
+}
+
 Config.Enable = {}
 Config.Timer = {}
 
----------------------------------------------------------------
 Config.Locale = 'en'
-Config.CheckVersion = true
-Config.CheckVersionDelay = 60 -- Minutes
 
 -- use phone_number instead of player name for 911 calls
 Config.PhoneNumber = true
@@ -27,13 +32,18 @@ Config.Enable.Melee = true
 Config.Enable.PlayerDowned = true
 ---------------------------------------------------------------
 
+Config.WhitelistedJobs = {
+    'ambulance',
+    'police',
+    'sheriff'
+}
+
 Citizen.CreateThread(function()
-    if not GetPlayerPed(-1) then return end
+    if not PlayerPedId() then return end
     while not firstname do
         Citizen.Wait(10)
     end
-
-    if notLoaded then
+    if ESX.PlayerLoaded then
         for k, v in pairs(Config.Enable) do
             if Config.Enable[k] ~= false then
                 Config[k] = {}
@@ -47,26 +57,23 @@ Citizen.CreateThread(function()
             Config.Shooting.Success = 100 -- 10 seconds
             Config.Shooting.Fail = 0 -- 0 seconds
         end
-            
-        notLoaded = nil
     end
-
     Config.WeaponBlacklist = {
-        'WEAPON_GRENADE',
-        'WEAPON_BZGAS',
-        'WEAPON_MOLOTOV',
-        'WEAPON_STICKYBOMB',
-        'WEAPON_PROXMINE',
-        'WEAPON_SNOWBALL',
-        'WEAPON_PIPEBOMB',
-        'WEAPON_BALL',
-        'WEAPON_SMOKEGRENADE',
-        'WEAPON_FLARE',
-        'WEAPON_PETROLCAN',
-        'WEAPON_FIREEXTINGUISHER',
-        'WEAPON_HAZARDCAN',
-        'WEAPON_RAYCARBINE',
-        'WEAPON_STUNGUN'
+        `WEAPON_GRENADE`,
+        `WEAPON_BZGAS`,
+        `WEAPON_MOLOTOV`,
+        `WEAPON_STICKYBOMB`,
+        `WEAPON_PROXMINE`,
+        `WEAPON_SNOWBALL`,
+        `WEAPON_PIPEBOMB`,
+        `WEAPON_BALL`,
+        `WEAPON_SMOKEGRENADE`,
+        `WEAPON_FLARE`,
+        `WEAPON_PETROLCAN`,
+        `WEAPON_FIREEXTINGUISHER`,
+        `WEAPON_HAZARDCAN`,
+        `WEAPON_RAYCARBINE`,
+        `WEAPON_STUNGUN`
     }
 
     Config.Colours = {
